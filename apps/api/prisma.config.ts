@@ -3,12 +3,25 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+const databaseUrl = process.env.DATABASE_URL;
+
+if(!databaseUrl){
+  throw new Error("DATABASE_URL is not defined in environment variables");
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
-  datasource: {
-    url: process.env["DATABASE_URL"],
+  datasource : {
+
+    url: databaseUrl,
   },
+
+  // generator: {
+  //   name: "client",
+  //   provider: "prisma-client",
+  //   output: "../src/generated",
+  // },
 });
